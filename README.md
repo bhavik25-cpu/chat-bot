@@ -124,20 +124,19 @@ Write-up: AI Chatbot (React + Node.js + Groq)
 
 
 What you built and why you chose this particular thing
->>
+
 An end-to-end chatbot: a React (Vite) frontend and an Express backend that proxies chat requests to Groq's free, OpenAI-compatible LLM API (Llama 3.3 70B).
 I chose this project because it's a compact but complete full-stack slice — frontend state management, a backend API layer, and a real external service integration — that's directly relevant to the kind of senior full-stack work I do day to day (MERN/Next.js/NestJS). It's also something I can keep extending and use as a live portfolio piece, rather than a throwaway exercise.
 I deliberately picked a free LLM provider (Groq) instead of a paid one so the project is runnable by anyone reviewing it without needing to hand over a credit card, and so the architecture question — "how do you keep an API key off the client and proxy it safely" — is answered by the code itself rather than by a README caveat.
 
 
- Which AI tools, models, or platforms you used and what role each played
+Which AI tools, models, or platforms you used and what role each played
 
 Claude (Anthropic) was the primary tool for the whole build — a pair programmer for scaffolding the project (backend Express server, frontend Vite + React app, styling, README), and later the implementer for each incremental feature I asked for.
 Groq is the AI service the application itself calls at runtime — the LLM behind the chatbot (Llama 3.3 70B via Groq's free-tier, OpenAI-compatible /chat/completions endpoint). This is a separate role from Claude: Claude wrote the code, Groq is what the finished app talks to when a user sends a message.
 
 
-- How AI influenced your decisions, architecture, structure, or direction at key moments
->>
+How AI influenced your decisions, architecture, structure, or direction at key moments
 Provider choice: asking for "free AI" led Claude to default to Groq rather than Hugging Face or a local model. That shaped the whole backend contract (OpenAI-style messages array, Bearer auth header) and made provider-swapping straightforward later.
 
 Security-first split between frontend and backend: I didn't explicitly ask for the API key to be kept server-side — Claude built it that way by default, key living only in backend/.env, frontend calling localhost:5000/api/chat rather than Groq directly.
